@@ -36,9 +36,9 @@
         /* =========================
            FORM SECTION
         ========================= */
-
         .form-box {
-            width: 360px;
+            width: 100%;
+            max-width: 360px;
             background: #fff;
             padding: 28px;
             border-radius: 12px;
@@ -99,9 +99,18 @@
         }
 
         /* =========================
+           PREVIEW WRAPPER (MOBILE FIX)
+        ========================= */
+        .biodata-container {
+            max-width: 100vw;
+            overflow-x: auto;
+            /* Adds horizontal scroll on mobile */
+            padding-bottom: 15px;
+        }
+
+        /* =========================
            BIODATA DESIGN
         ========================= */
-
         #biodata {
             width: 1000px;
             min-height: 1273px;
@@ -110,6 +119,8 @@
             padding: 85px 55px 70px;
             border: 2px solid #d4bc7b;
             overflow: hidden;
+            flex-shrink: 0;
+            /* Prevents squishing */
         }
 
         #biodata::before {
@@ -138,7 +149,6 @@
         /* =========================
            FIXED PHOTO SIZE
         ========================= */
-
         .photo-box {
             width: 190px;
             height: 240px;
@@ -159,7 +169,6 @@
         /* =========================
            SECTION TITLE
         ========================= */
-
         .section-title {
             display: inline-block;
             background: #D0A75F;
@@ -175,7 +184,6 @@
         /* =========================
            ROWS & COLUMNS
         ========================= */
-
         .section {
             margin-top: 45px;
             padding-left: 30px;
@@ -217,11 +225,7 @@
             font-weight: 400;
             line-height: 1.4;
             padding-right: 5px;
-
-            /* EXPLICIT FONT FOR VALUES MATCHING YOUR IMAGE */
             font-family: 'Times New Roman', Times, serif;
-
-            /* ALLOW TEXT TO WRAP NORMALLY SO IT DOESN'T GET HIDDEN */
             white-space: normal;
             word-break: break-word;
         }
@@ -229,7 +233,6 @@
         /* =========================
            CROP MODAL
         ========================= */
-
         .crop-modal {
             position: fixed;
             inset: 0;
@@ -270,31 +273,18 @@
         }
 
         /* =========================
-           MOBILE
+           MOBILE LAYOUT FIXES
         ========================= */
-
-        @media(max-width:1000px) {
-            #biodata {
-                width: 100%;
+        @media(max-width: 1000px) {
+            .wrapper {
+                flex-direction: column;
+                align-items: center;
             }
-
-            .top-section {
-                flex-direction: column-reverse;
+            body {
+                padding: 15px 5px;
             }
-
-            .photo-box {
-                margin: auto;
-            }
-
-            .label {
-                width: 140px;
-                min-width: 140px;
-                font-size: 18px;
-            }
-
-            .value {
-                font-size: 18px;
-            }
+            /* Notice we DO NOT change the #biodata internal classes here anymore.
+               We want it to stay 1000px wide so the PDF stays perfectly formatted. */
         }
     </style>
 </head>
@@ -304,104 +294,84 @@
     <div class="wrapper">
 
         <div class="form-box">
-
             <h2>Marriage Biodata</h2>
 
             <div class="field">
                 <label>Name</label>
                 <input type="text" id="name">
             </div>
-
             <div class="field">
                 <label>Date Of Birth</label>
                 <input type="text" id="dob">
             </div>
-
             <div class="field">
                 <label>Place Of Birth</label>
                 <input type="text" id="pob">
             </div>
-
             <div class="field">
                 <label>Time Of Birth</label>
                 <input type="text" id="tob">
             </div>
-
             <div class="field">
                 <label>Height</label>
                 <input type="text" id="height">
             </div>
-
             <div class="field">
                 <label>Caste</label>
                 <input type="text" id="caste">
             </div>
-
             <div class="field">
                 <label>Weight</label>
                 <input type="text" id="weight">
             </div>
-
             <div class="field">
                 <label>Education</label>
                 <input type="text" id="education">
             </div>
-
             <div class="field">
                 <label>Father's Name</label>
                 <input type="text" id="father">
             </div>
-
             <div class="field">
                 <label>Father's Occupation</label>
                 <input type="text" id="fatherOcc">
             </div>
-
             <div class="field">
                 <label>Mother's Name</label>
                 <input type="text" id="mother">
             </div>
-
             <div class="field">
                 <label>Mother's Occupation</label>
                 <input type="text" id="motherOcc">
             </div>
-
             <div class="field">
                 <label>Sister</label>
                 <input type="text" id="sister">
             </div>
-
             <div class="field">
                 <label>Grand Father</label>
                 <input type="text" id="gf">
             </div>
-
             <div class="field">
                 <label>Grand Mother</label>
                 <input type="text" id="gm">
             </div>
-
             <div class="field">
                 <label>Maternal Uncle</label>
                 <input type="text" id="uncle">
             </div>
-
             <div class="field">
                 <label>Contact</label>
                 <input type="text" id="contact1">
             </div>
-
             <div class="field">
                 <label> </label>
                 <input type="text" id="contact2">
             </div>
-
             <div class="field">
                 <label>Address</label>
                 <input type="text" id="address">
             </div>
-
             <div class="field">
                 <label>Native</label>
                 <input type="text" id="native">
@@ -415,162 +385,128 @@
             <button class="btn" onclick="downloadPDF()">
                 Download PDF
             </button>
-
         </div>
 
-        <div id="biodata">
-
-            <div class="top-section">
-
-                <div class="left-content">
-
-                    <div class="section-title">
-                        Personal Details
+        <!-- NEW WRAPPER TO ALLOW SCROLLING INSTEAD OF SQUISHING -->
+        <div class="biodata-container">
+            <div id="biodata">
+                <div class="top-section">
+                    <div class="left-content">
+                        <div class="section-title">Personal Details</div>
+                        <div class="row">
+                            <div class="label">Name</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_name"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Date Of Birth</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_dob"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Place Of Birth</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_pob"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Time Of Birth</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_tob"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Height</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_height"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Caste</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_caste"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Weight</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_weight"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Education</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_education"></div>
+                        </div>
                     </div>
-
-                    <div class="row">
-                        <div class="label">Name</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_name"></div>
+                    <div class="photo-box">
+                        <img id="photoPreview" src="https://via.placeholder.com/190x240.png?text=Photo">
                     </div>
-
-                    <div class="row">
-                        <div class="label">Date Of Birth</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_dob"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="label">Place Of Birth</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_pob"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="label">Time Of Birth</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_tob"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="label">Height</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_height"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="label">Caste</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_caste"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="label">Weight</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_weight"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="label">Education</div>
-                        <div class="colon">:</div>
-                        <div class="value" id="v_education"></div>
-                    </div>
-
                 </div>
 
-                <div class="photo-box">
-                    <img id="photoPreview" src="https://via.placeholder.com/190x240.png?text=Photo">
+                <div class="section">
+                    <div class="section-title">Family Details</div>
+                    <div class="row">
+                        <div class="label">Father's Name</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_father"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Father's Occupation</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_fatherOcc"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Mother's Name</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_mother"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Mother's Occupation</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_motherOcc"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Sister</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_sister"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Grand Father</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_gf"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Grand Mother</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_gm"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Maternal Uncle</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_uncle"></div>
+                    </div>
                 </div>
 
+                <div class="section">
+                    <div class="section-title">Contact Details</div>
+                    <div class="row">
+                        <div class="label">Contact</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_contact1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label"> </div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_contact2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Address</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_address"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Native</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_native"></div>
+                    </div>
+                </div>
             </div>
-
-            <div class="section">
-
-                <div class="section-title">
-                    Family Details
-                </div>
-
-                <div class="row">
-                    <div class="label">Father's Name</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_father"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Father's Occupation</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_fatherOcc"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Mother's Name</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_mother"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Mother's Occupation</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_motherOcc"></div>
-                </div>
-                <div class="row">
-                    <div class="label">Sister</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_sister"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Grand Father</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_gf"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Grand Mother</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_gm"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Maternal Uncle</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_uncle"></div>
-                </div>
-
-            </div>
-
-            <div class="section">
-
-                <div class="section-title">
-                    Contact Details
-                </div>
-
-                <div class="row">
-                    <div class="label">Contact</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_contact1"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label"> </div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_contact2"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Address</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_address"></div>
-                </div>
-
-                <div class="row">
-                    <div class="label">Native</div>
-                    <div class="colon">:</div>
-                    <div class="value" id="v_native"></div>
-                </div>
-
-            </div>
-
         </div>
 
     </div>
@@ -586,11 +522,9 @@
     </div>
 
     <script>
-
         // =========================
         // LIVE UPDATE
         // =========================
-
         const fields = [
             "name", "dob", "pob", "tob", "height", "caste", "weight",
             "education", "father", "fatherOcc", "mother", "motherOcc", "sister",
@@ -606,9 +540,7 @@
         // =========================
         // IMAGE CROPPER
         // =========================
-
         let cropper;
-
         const photoInput = document.getElementById("photoInput");
         const cropModal = document.getElementById("cropModal");
         const cropImage = document.getElementById("cropImage");
@@ -619,7 +551,6 @@
             if (!file) return;
 
             const reader = new FileReader();
-
             reader.onload = function (event) {
                 cropModal.style.display = "flex";
                 cropImage.src = event.target.result;
@@ -642,7 +573,6 @@
                     cropBoxResizable: false
                 });
             };
-
             reader.readAsDataURL(file);
         });
 
@@ -666,23 +596,33 @@
         }
 
         // =========================
-        // HIGH QUALITY PDF 
+        // HIGH QUALITY PDF (MOBILE FIXED)
         // =========================
-
         async function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const biodata = document.getElementById("biodata");
 
+            // Scroll to top to ensure html2canvas doesn't glitch the viewport mapping
+            window.scrollTo(0,0);
+
+            // Scale reduced to 2. Scale 5 will crash mobile phone RAM and cause white screens/distortions.
             const canvas = await html2canvas(biodata, {
-                scale: 5,
+                scale: 2, 
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: "#ffffff",
-                imageTimeout: 0,
-                logging: false
+                width: 1000,
+                height: 1273,
+                onclone: function (clonedDoc) {
+                    // Force the cloned element to strict dimensions just in case
+                    const clonedBiodata = clonedDoc.getElementById('biodata');
+                    clonedBiodata.style.width = '1000px';
+                    clonedBiodata.style.height = '1273px';
+                    clonedBiodata.style.transform = 'none';
+                }
             });
 
-            const imgData = canvas.toDataURL("image/jpeg", 1.0);
+            const imgData = canvas.toDataURL("image/jpeg", 0.9);
             const pdf = new jsPDF({
                 orientation: "portrait",
                 unit: "px",
@@ -692,9 +632,7 @@
             pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 1273, undefined, 'FAST');
             pdf.save("Marriage_Biodata.pdf");
         }
-
     </script>
-
 </body>
 
 </html>
