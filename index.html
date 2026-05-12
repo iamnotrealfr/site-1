@@ -104,7 +104,6 @@
         .biodata-container {
             max-width: 100vw;
             overflow-x: auto;
-            /* Adds horizontal scroll on mobile */
             padding-bottom: 15px;
         }
 
@@ -113,14 +112,14 @@
         ========================= */
         #biodata {
             width: 1000px;
-            min-height: 1273px;
+            /* INCREASED HEIGHT HERE so content doesn't get cut off */
+            min-height: 1500px; 
             background: #fff;
             position: relative;
             padding: 85px 55px 70px;
             border: 2px solid #d4bc7b;
             overflow: hidden;
             flex-shrink: 0;
-            /* Prevents squishing */
         }
 
         #biodata::before {
@@ -283,8 +282,6 @@
             body {
                 padding: 15px 5px;
             }
-            /* Notice we DO NOT change the #biodata internal classes here anymore.
-               We want it to stay 1000px wide so the PDF stays perfectly formatted. */
         }
     </style>
 </head>
@@ -387,7 +384,6 @@
             </button>
         </div>
 
-        <!-- NEW WRAPPER TO ALLOW SCROLLING INSTEAD OF SQUISHING -->
         <div class="biodata-container">
             <div id="biodata">
                 <div class="top-section">
@@ -596,7 +592,7 @@
         }
 
         // =========================
-        // HIGH QUALITY PDF (MOBILE FIXED)
+        // HIGH QUALITY PDF (MOBILE FIXED & HEIGHT INCREASED)
         // =========================
         async function downloadPDF() {
             const { jsPDF } = window.jspdf;
@@ -612,12 +608,12 @@
                 allowTaint: true,
                 backgroundColor: "#ffffff",
                 width: 1000,
-                height: 1273,
+                height: 1500, // INCREASED HEIGHT HERE
                 onclone: function (clonedDoc) {
                     // Force the cloned element to strict dimensions just in case
                     const clonedBiodata = clonedDoc.getElementById('biodata');
                     clonedBiodata.style.width = '1000px';
-                    clonedBiodata.style.height = '1273px';
+                    clonedBiodata.style.height = '1500px'; // INCREASED HEIGHT HERE
                     clonedBiodata.style.transform = 'none';
                 }
             });
@@ -626,10 +622,10 @@
             const pdf = new jsPDF({
                 orientation: "portrait",
                 unit: "px",
-                format: [1000, 1273]
+                format: [1000, 1500] // INCREASED HEIGHT HERE
             });
 
-            pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 1273, undefined, 'FAST');
+            pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 1500, undefined, 'FAST'); // INCREASED HEIGHT HERE
             pdf.save("Marriage_Biodata.pdf");
         }
     </script>
