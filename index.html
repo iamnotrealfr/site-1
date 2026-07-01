@@ -66,7 +66,8 @@
             font-weight: 700;
         }
 
-        .field input {
+        .field input,
+        .field textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #d6bf8c;
@@ -76,7 +77,12 @@
             font-family: inherit;
         }
 
-        .field input:focus {
+        .field textarea {
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
             border-color: #9b7b2d;
         }
 
@@ -114,7 +120,8 @@
         #biodata {
             width: 1000px;
             min-height: 1273px;
-            height: auto; /* ALLOWS CONTENT TO PUSH HEIGHT NATURALLY */
+            height: auto;
+            /* ALLOWS CONTENT TO PUSH HEIGHT NATURALLY */
             background: #fff;
             position: relative;
             padding: 85px 55px 70px;
@@ -265,6 +272,7 @@
                 flex-direction: column;
                 align-items: center;
             }
+
             body {
                 padding: 15px 5px;
             }
@@ -287,6 +295,11 @@
             <div class="field"><label>Caste</label><input type="text" id="caste"></div>
             <div class="field"><label>Weight</label><input type="text" id="weight"></div>
             <div class="field"><label>Education</label><input type="text" id="education"></div>
+
+            <!-- Hobbies Field Added Here -->
+            <div class="field"><label>Hobbies</label><textarea id="hobbies" rows="3"
+                    placeholder="e.g., Reading, Cooking, Traveling"></textarea></div>
+
             <div class="field"><label>Father's Name</label><input type="text" id="father"></div>
             <div class="field"><label>Father's Occ.</label><input type="text" id="fatherOcc"></div>
             <div class="field"><label>Mother's Name</label><input type="text" id="mother"></div>
@@ -313,14 +326,53 @@
                 <div class="top-section">
                     <div class="left-content">
                         <div class="section-title">Personal Details</div>
-                        <div class="row"><div class="label">Name</div><div class="colon">:</div><div class="value" id="v_name"></div></div>
-                        <div class="row"><div class="label">Date Of Birth</div><div class="colon">:</div><div class="value" id="v_dob"></div></div>
-                        <div class="row"><div class="label">Place Of Birth</div><div class="colon">:</div><div class="value" id="v_pob"></div></div>
-                        <div class="row"><div class="label">Time Of Birth</div><div class="colon">:</div><div class="value" id="v_tob"></div></div>
-                        <div class="row"><div class="label">Height</div><div class="colon">:</div><div class="value" id="v_height"></div></div>
-                        <div class="row"><div class="label">Caste</div><div class="colon">:</div><div class="value" id="v_caste"></div></div>
-                        <div class="row"><div class="label">Weight</div><div class="colon">:</div><div class="value" id="v_weight"></div></div>
-                        <div class="row"><div class="label">Education</div><div class="colon">:</div><div class="value" id="v_education"></div></div>
+                        <div class="row">
+                            <div class="label">Name</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_name"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Date Of Birth</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_dob"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Place Of Birth</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_pob"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Time Of Birth</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_tob"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Height</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_height"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Caste</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_caste"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Weight</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_weight"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Education</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_education"></div>
+                        </div>
+
+                        <!-- Hobbies Preview Added Here -->
+                        <div class="row">
+                            <div class="label">Hobbies</div>
+                            <div class="colon">:</div>
+                            <div class="value" id="v_hobbies" style="white-space: pre-wrap;"></div>
+                        </div>
                     </div>
                     <div class="photo-box">
                         <img id="photoPreview" src="https://via.placeholder.com/190x240.png?text=Photo">
@@ -329,22 +381,70 @@
 
                 <div class="section">
                     <div class="section-title">Family Details</div>
-                    <div class="row"><div class="label">Father's Name</div><div class="colon">:</div><div class="value" id="v_father"></div></div>
-                    <div class="row"><div class="label">Father's Occupation</div><div class="colon">:</div><div class="value" id="v_fatherOcc"></div></div>
-                    <div class="row"><div class="label">Mother's Name</div><div class="colon">:</div><div class="value" id="v_mother"></div></div>
-                    <div class="row"><div class="label">Mother's Occupation</div><div class="colon">:</div><div class="value" id="v_motherOcc"></div></div>
-                    <div class="row"><div class="label">Sister</div><div class="colon">:</div><div class="value" id="v_sister"></div></div>
-                    <div class="row"><div class="label">Grand Father</div><div class="colon">:</div><div class="value" id="v_gf"></div></div>
-                    <div class="row"><div class="label">Grand Mother</div><div class="colon">:</div><div class="value" id="v_gm"></div></div>
-                    <div class="row"><div class="label">Maternal Uncle</div><div class="colon">:</div><div class="value" id="v_uncle"></div></div>
+                    <div class="row">
+                        <div class="label">Father's Name</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_father"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Father's Occupation</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_fatherOcc"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Mother's Name</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_mother"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Mother's Occupation</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_motherOcc"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Younger Sister</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_sister"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Grand Father</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_gf"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Grand Mother</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_gm"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Maternal Uncle</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_uncle"></div>
+                    </div>
                 </div>
 
                 <div class="section">
                     <div class="section-title">Contact Details</div>
-                    <div class="row"><div class="label">Contact</div><div class="colon">:</div><div class="value" id="v_contact1"></div></div>
-                    <div class="row"><div class="label"> </div><div class="colon">:</div><div class="value" id="v_contact2"></div></div>
-                    <div class="row"><div class="label">Address</div><div class="colon">:</div><div class="value" id="v_address"></div></div>
-                    <div class="row"><div class="label">Native</div><div class="colon">:</div><div class="value" id="v_native"></div></div>
+                    <div class="row">
+                        <div class="label">Contact</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_contact1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label"> </div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_contact2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Address</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_address"></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Native</div>
+                        <div class="colon">:</div>
+                        <div class="value" id="v_native"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -364,7 +464,7 @@
     <script>
         const fields = [
             "name", "dob", "pob", "tob", "height", "caste", "weight",
-            "education", "father", "fatherOcc", "mother", "motherOcc", "sister",
+            "education", "hobbies", "father", "fatherOcc", "mother", "motherOcc", "sister",
             "gf", "gm", "uncle", "contact1", "contact2", "address", "native"
         ];
 
@@ -431,7 +531,7 @@
             const biodata = document.getElementById("biodata");
 
             // 1. Force the scroll up so the browser engine maps from the absolute top
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
 
             // 2. Dynamically calculate exactly how tall your content is.
             // If it's less than 1273, force it to 1273. If your long address pushes it to 1600, it becomes 1600!
@@ -439,22 +539,22 @@
             const dynamicHeight = Math.max(biodata.scrollHeight, 1273);
 
             const canvas = await html2canvas(biodata, {
-                scale: 2, 
+                scale: 2,
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: "#ffffff",
                 width: targetWidth,
                 height: dynamicHeight,
-                
+
                 // 3. Tricks the mobile phone into thinking the screen is massive, forcing it to draw off-screen content
                 windowWidth: targetWidth,
                 windowHeight: dynamicHeight,
                 scrollX: 0,
                 scrollY: 0,
-                
+
                 onclone: function (clonedDoc) {
                     const clonedBiodata = clonedDoc.getElementById('biodata');
-                    
+
                     // Force exact strict sizes on the cloned version meant for the PDF
                     clonedBiodata.style.width = targetWidth + 'px';
                     clonedBiodata.style.height = dynamicHeight + 'px';
